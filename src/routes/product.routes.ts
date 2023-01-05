@@ -6,6 +6,8 @@ const router = Router();
 
 const productController = new ProductController();
 
+router.get('/', productController.getAll);
+
 router.post('/', validateNewProduct, productController.create);
 
 export default router;
