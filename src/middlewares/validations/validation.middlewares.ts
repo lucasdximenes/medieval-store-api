@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { ValidationError } from 'joi';
-import { newProductSchema, newUserSchema } from './schemas/validationSchemas';
+import {
+  newProductSchema,
+  newUserSchema,
+  loginSchema,
+} from './schemas/validationSchemas';
 import { BadRequestError, UnprocessableEntityError } from '../../errors';
 
 const handleError = (error: ValidationError): void => {
@@ -32,6 +36,16 @@ export const validateNewUser = (
   next: NextFunction,
 ): void => {
   const { error } = newUserSchema.validate(req.body);
+
+  if (error) {
+    handleError(error);
+  }
+
+  next();
+};
+
+export const validateLogin = (req: Request, _res: Response, next: NextFunction): void => {
+  const { error } = loginSchema.validate(req.body);
 
   if (error) {
     handleError(error);

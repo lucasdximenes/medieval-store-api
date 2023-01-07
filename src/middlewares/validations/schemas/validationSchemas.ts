@@ -49,3 +49,8 @@ export const newUserSchema = Joi.object({
   level: levelSchema,
   password: passwordSchema,
 });
+
+export const loginSchema = Joi.object({
+  username: usernameSchema,
+  password: passwordSchema,
+});
