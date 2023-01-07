@@ -5,9 +5,13 @@ export interface NewUser {
   password: string;
 }
 
-export interface User {
+export interface SanitizedUser {
   id: number;
   username: string;
   vocation: string;
   level: number;
+}
+
+export interface User extends SanitizedUser {
+  password?: string;
 }

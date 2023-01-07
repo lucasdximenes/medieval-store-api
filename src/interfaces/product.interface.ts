@@ -1,19 +1,14 @@
-interface Product {
-  id: number;
-  name: string;
-  amount: string;
-  orderId: number | null;
-}
-
-interface CreatedProduct {
-  id: number;
-  name: string;
-  amount: string;
-}
-
 interface CreateProduct {
   name: string;
   amount: string;
+}
+
+interface CreatedProduct extends CreateProduct {
+  id: number;
+}
+
+interface Product extends CreatedProduct {
+  orderId: number | null;
 }
 
 export { Product, CreatedProduct, CreateProduct };
