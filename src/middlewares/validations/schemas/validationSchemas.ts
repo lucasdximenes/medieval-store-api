@@ -54,3 +54,25 @@ export const loginSchema = Joi.object({
   username: usernameSchema,
   password: passwordSchema,
 });
+
+export const productsIdsSchema = Joi.array()
+  .items(
+    Joi.number().integer().min(1).required()
+      .messages({
+        'number.base': '"productsIds" must be a number',
+        'number.empty': '"productsIds" is required',
+        'number.min': '"productsIds" must be greater than or equal to 1',
+        'number.integer': '"productsIds" must be an integer',
+      }),
+  )
+  .required()
+  .min(1)
+  .messages({
+    'array.base': '"productsIds" must be an array',
+    'array.empty': '"productsIds" is required',
+    'array.includesRequiredUnknowns': '"productsIds" must include only numbers',
+  });
+
+export const newOrderSchema = Joi.object({
+  productsIds: productsIdsSchema,
+});
