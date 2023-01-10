@@ -1,5 +1,6 @@
-import { Pool, RowDataPacket } from 'mysql2/promise';
+import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 import { Order } from '../interfaces/order.interface';
+// import { Order, NewOrder } from '../interfaces/order.interface';
 
 export default class OrderModel {
   private connection: Pool;
@@ -23,5 +24,13 @@ export default class OrderModel {
       `,
     );
     return orders;
+  };
+
+  public insert = async (orderUserId: number): Promise<number> => {
+    const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
+      'INSERT INTO Trybesmith.orders (user_id) VALUES (?);',
+      [orderUserId],
+    );
+    return insertId;
   };
 }
