@@ -25,4 +25,12 @@ export default class UserModel {
     );
     return { ...user };
   };
+
+  public getById = async (id: number): Promise<User> => {
+    const [[user]] = await this.connection.execute<RowDataPacket[] & User[]>(
+      'SELECT * FROM Trybesmith.users WHERE id = ?;',
+      [id],
+    );
+    return { ...user };
+  };
 }
