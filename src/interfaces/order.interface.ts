@@ -3,3 +3,8 @@ export interface Order {
   userId: number;
   productsIds: number[];
 }
+
+export interface NewOrder {
+  userId: number;
+  productsIds: number[];
+}
