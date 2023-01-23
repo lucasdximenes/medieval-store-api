@@ -11,7 +11,7 @@ export default class ProductModel {
   public create = async (product: CreateProduct): Promise<CreatedProduct> => {
     const { name, amount } = product;
     const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
-      'INSERT INTO Trybesmith.products (name, amount) VALUES (?, ?);',
+      'INSERT INTO MedievalStore.products (name, amount) VALUES (?, ?);',
       [name, amount],
     );
 
@@ -20,7 +20,7 @@ export default class ProductModel {
 
   public getAll = async (): Promise<Product[]> => {
     const [products] = await this.connection.execute<RowDataPacket[] & Product[]>(
-      'SELECT id, name, amount, order_id AS orderId FROM Trybesmith.products;',
+      'SELECT id, name, amount, order_id AS orderId FROM MedievalStore.products;',
     );
     return products;
   };
@@ -28,7 +28,7 @@ export default class ProductModel {
   public allProductsExist = async (productsIds: number[]): Promise<boolean> => {
     const placeholder = productsIds.map(() => '?').join(',');
     const [products] = await this.connection.execute<RowDataPacket[] & Product[]>(
-      `SELECT id FROM Trybesmith.products WHERE id IN (${placeholder});`,
+      `SELECT id FROM MedievalStore.products WHERE id IN (${placeholder});`,
       productsIds,
     );
     return products.length === productsIds.length;
@@ -37,7 +37,7 @@ export default class ProductModel {
   public allProductsAreAvailable = async (productsIds: number[]): Promise<boolean> => {
     const placeholder = productsIds.map(() => '?').join(',');
     const [ordersId] = await this.connection.execute<RowDataPacket[] & Product[]>(
-      `SELECT order_id FROM Trybesmith.products WHERE id IN (${placeholder});`,
+      `SELECT order_id FROM MedievalStore.products WHERE id IN (${placeholder});`,
       productsIds,
     );
     return ordersId.every((order) => order.order_id === null);
@@ -46,7 +46,7 @@ export default class ProductModel {
   public update = async (productId: number[], orderId: number): Promise<void> => {
     const placeholder = productId.map(() => '?').join(',');
     await this.connection.execute(
-      `UPDATE Trybesmith.products SET order_id = ? WHERE id IN (${placeholder});`,
+      `UPDATE MedievalStore.products SET order_id = ? WHERE id IN (${placeholder});`,
       [orderId, ...productId],
     );
   };

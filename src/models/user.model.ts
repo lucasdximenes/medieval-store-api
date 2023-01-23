@@ -11,7 +11,7 @@ export default class UserModel {
   public create = async (newUser: NewUser): Promise<SanitizedUser> => {
     const { username, vocation, level, password } = newUser;
     const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
-      'INSERT INTO Trybesmith.users (username, vocation, level, password) VALUES (?, ?, ?, ?);',
+      'INSERT INTO MedievalStore.users (username, vocation, level, password) VALUES (?, ?, ?, ?);',
       [username, vocation, level, password],
     );
 
@@ -20,7 +20,7 @@ export default class UserModel {
 
   public getByUsername = async (username: string): Promise<User> => {
     const [[user]] = await this.connection.execute<RowDataPacket[] & User[]>(
-      'SELECT * FROM Trybesmith.users WHERE username = ?;',
+      'SELECT * FROM MedievalStore.users WHERE username = ?;',
       [username],
     );
     return { ...user };
@@ -28,7 +28,7 @@ export default class UserModel {
 
   public getById = async (id: number): Promise<User> => {
     const [[user]] = await this.connection.execute<RowDataPacket[] & User[]>(
-      'SELECT * FROM Trybesmith.users WHERE id = ?;',
+      'SELECT * FROM MedievalStore.users WHERE id = ?;',
       [id],
     );
     return { ...user };

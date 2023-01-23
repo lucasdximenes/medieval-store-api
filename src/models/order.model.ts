@@ -17,8 +17,8 @@ export default class OrderModel {
         o.user_id as userId,
         JSON_ARRAYAGG(p.id) as productsIds
       FROM
-        Trybesmith.orders o
-        JOIN Trybesmith.products p ON o.id = p.order_id
+        MedievalStore.orders o
+        JOIN MedievalStore.products p ON o.id = p.order_id
       GROUP BY
         o.id;
       `,
@@ -28,7 +28,7 @@ export default class OrderModel {
 
   public insert = async (orderUserId: number): Promise<number> => {
     const [{ insertId }] = await this.connection.execute<ResultSetHeader>(
-      'INSERT INTO Trybesmith.orders (user_id) VALUES (?);',
+      'INSERT INTO MedievalStore.orders (user_id) VALUES (?);',
       [orderUserId],
     );
     return insertId;
