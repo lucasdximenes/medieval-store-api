@@ -1,7 +1,8 @@
-DROP SCHEMA IF EXISTS Trybesmith;
-CREATE SCHEMA IF NOT EXISTS Trybesmith;
+DROP SCHEMA IF EXISTS MedievalStore;
 
-CREATE TABLE Trybesmith.users (
+CREATE SCHEMA IF NOT EXISTS MedievalStore;
+
+CREATE TABLE MedievalStore.users (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   username TEXT NOT NULL,
   vocation TEXT NOT NULL,
@@ -9,41 +10,41 @@ CREATE TABLE Trybesmith.users (
   password TEXT NOT NULL
 );
 
-CREATE TABLE Trybesmith.orders (
+CREATE TABLE MedievalStore.orders (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   user_id INTEGER,
-  FOREIGN KEY (user_id) REFERENCES Trybesmith.users (id)
+  FOREIGN KEY (user_id) REFERENCES MedievalStore.users (id)
 );
 
-CREATE TABLE Trybesmith.products (
+CREATE TABLE MedievalStore.products (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   amount TEXT NOT NULL,
   order_id INTEGER,
-  FOREIGN KEY (order_id) REFERENCES Trybesmith.orders (id)
+  FOREIGN KEY (order_id) REFERENCES MedievalStore.orders (id)
 );
 
 INSERT INTO
-  Trybesmith.users (username, vocation, level, password)
+  MedievalStore.users (username, vocation, level, password)
 VALUES
   ("reigal", "Guerreiro", 10, "1dragaonoceu"),
   ("vyrion", "Inventor", 8, "pagandodividas"),
   ("yraa", "Ladina", 5, "valarmorg");
 
 INSERT INTO
-  Trybesmith.orders (user_id)
+  MedievalStore.orders (user_id)
 VALUES
   (1),
   (3),
   (2);
 
 INSERT INTO
-  Trybesmith.products (name, amount)
+  MedievalStore.products (name, amount)
 VALUES
   ("Espada curta", "10 peças de ouro");
 
 INSERT INTO
-  Trybesmith.products (name, amount, order_id)
+  MedievalStore.products (name, amount, order_id)
 VALUES
   (
     "Escudo desnecessariamente grande",
